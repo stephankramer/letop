@@ -184,7 +184,7 @@ class RegularizationSolver(object):
         solve(
             self.Av,
             velocity.vector(),
-            dJ,
+            dJ.riesz_representation(riesz_map="l2"),
             options_prefix="reg_solver",
             solver_parameters=self.solver_parameters,
         )

@@ -55,6 +55,7 @@ def HamiltonJacobiCGSolver(
     F = AdvectionDiffusionGLS(V, theta, phi, PeInv=PeInv, phi_t=phi_t)
 
     problem = fdts.DAEProblem(F, phi, phi_t, (0.0, t_end), bcs=bcs)
+    problem.u_restrict = problem.u
     parameters = {
         "ts_type": "rosw",
         "ts_rows_type": "2m",
