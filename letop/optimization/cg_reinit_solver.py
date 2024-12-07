@@ -110,10 +110,10 @@ class ReinitSolverCG:
             )
 
         def residual_phi(phi):
-            return fd.norm(
+            return (
                 fd.assemble(
                     d2(nabla_phi_bar(phi)) * inner(grad(phi), grad(sigma)) * dx
-                )
+                ).dat.norm
             )
 
         a = inner(grad(rho), grad(sigma)) * dx

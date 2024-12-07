@@ -50,7 +50,7 @@ class LevelSetFunctional(object):
         # Actually, not even pyadjoint checks if the given Control is in the
         # tape.
 
-    def derivative(self, options={}):
+    def derivative(self, options=None):
         """Returns the derivative of the functional w.r.t. the control.
 
         Using the adjoint method, the derivative of the functional with
@@ -66,6 +66,12 @@ class LevelSetFunctional(object):
                 Should be an instance of the same type as the control.
 
         """
+        if options is None:
+            options = {}
+        # NOTE: letop was written before introduction of CoFunctions
+        # derivative(), and dJ/dG/dH of InfProblem, should probably return a CoFunction
+        # for now we store it as a Function (which is eff. the small l2 riesz representation)
+        options.setdefault("riesz_representation", "l2")
         # Call callback
         self.derivative_cb_pre(self.level_set)
 
